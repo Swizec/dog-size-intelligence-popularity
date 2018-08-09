@@ -13,7 +13,9 @@ const Svg = styled.svg`
 `;
 
 const Circle = styled.circle`
-    fill: black;
+    fill: #008ae5;
+    fill-opacity: 0.5;
+    stroke: #008ae5;
 `;
 
 class App extends Component {
@@ -82,11 +84,18 @@ class App extends Component {
                             data={data}
                             x={100}
                             y={100}
-                            width={500}
-                            height={500}
-                            filter={d => d.weight && d.height}
+                            width={350}
+                            height={350}
+                            filter={d =>
+                                d.weight &&
+                                d.height &&
+                                d.weight[0] &&
+                                d.height[0]
+                            }
                             xData={d => d.weight[0]}
                             yData={d => d.height[0]}
+                            xLabel="Weight (lbs)"
+                            yLabel="Height (in)"
                             entry={({ x, y }) => <Circle cx={x} cy={y} r={5} />}
                         />
                     </Svg>
