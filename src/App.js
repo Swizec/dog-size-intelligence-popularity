@@ -3,6 +3,19 @@ import logo from "./logo.svg";
 import "./App.css";
 
 import * as d3 from "d3";
+import styled from "styled-components";
+
+import Scatterplot from "./Scatterplot";
+
+const Svg = styled.svg`
+    width: 100%;
+    min-height: 640px;
+    border: 1px solid red;
+`;
+
+const Circle = styled.circle`
+    fill: black;
+`;
 
 class App extends Component {
     state = {
@@ -64,6 +77,19 @@ class App extends Component {
                 <p className="App-intro">
                     {data === null ? "Loading CSV files ..." : null}
                 </p>
+                {data !== null ? (
+                    <Svg>
+                        <Scatterplot
+                            data={data}
+                            x={100}
+                            y={100}
+                            filter={d => d.weight && d.height}
+                            xData={d => d.weight[0]}
+                            yData={d => d.height[0]}
+                            entry={({ x, y }) => <Circle cx={x} cy={y} r={5} />}
+                        />
+                    </Svg>
+                ) : null}
             </div>
         );
     }
