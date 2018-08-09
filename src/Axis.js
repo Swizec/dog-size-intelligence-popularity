@@ -37,7 +37,7 @@ class Axis extends React.Component {
             case "Bottom":
                 return { x: scale.range()[1] + 25, y: 25 };
             case "Left":
-                return { x: -20, y: 0 };
+                return { x: -25, y: 0 };
         }
     }
 
