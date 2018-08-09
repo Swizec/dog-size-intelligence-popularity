@@ -10,7 +10,6 @@ import Scatterplot from "./Scatterplot";
 const Svg = styled.svg`
     width: 100%;
     min-height: 640px;
-    border: 1px solid red;
 `;
 
 const Circle = styled.circle`
@@ -83,6 +82,8 @@ class App extends Component {
                             data={data}
                             x={100}
                             y={100}
+                            width={500}
+                            height={500}
                             filter={d => d.weight && d.height}
                             xData={d => d.weight[0]}
                             yData={d => d.height[0]}

@@ -1,5 +1,5 @@
 import React from "react";
-import { keyframes } from "../node_modules/styled-components";
+import * as d3 from "d3";
 
 class Scatterplot extends React.Component {
     state = {};
@@ -11,26 +11,32 @@ class Scatterplot extends React.Component {
             ...state,
             data: Object.entries(data)
                 .filter(([_, val]) => filter(val))
-                .reduce((data, [key, value]) => ({ ...data, [key]: value }), {})
+                .map(([key, value]) => value)
         };
     }
 
     render() {
-        const { x, y, xData, yData, entry } = this.props,
+        const { x, y, xData, yData, entry, width, height } = this.props,
             { data } = this.state;
 
-        console.log(data);
+        const xScale = d3
+            .scaleLinear()
+            .domain(d3.extent(data, xData))
+            .range([0, width]);
+
+        const yScale = d3
+            .scaleLinear()
+            .domain(d3.extent(data, yData))
+            .range([0, height]);
 
         return (
             <g transform={`translate(${x}, ${y})`}>
-                {Object.keys(data).map(k => {
-                    const d = data[k];
-
-                    return entry({
-                        x: xData(d),
-                        y: yData(d)
-                    });
-                })}
+                {data.map(d =>
+                    entry({
+                        x: xScale(xData(d)),
+                        y: yScale(yData(d))
+                    })
+                )}
             </g>
         );
     }
