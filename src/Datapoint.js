@@ -3,6 +3,8 @@ import styled from "styled-components";
 import chroma from "chroma-js";
 import * as d3 from "d3";
 
+import DashboardContext from "./DashboardContext";
+
 const Circle = styled.circle`
     fill: ${({ highlighted }) =>
         highlighted
@@ -35,18 +37,26 @@ class Datapoint extends React.Component {
     };
 
     render() {
-        const { x, y } = this.props,
+        const { x, y, breed } = this.props,
             { highlighted } = this.state;
 
         return (
-            <Circle
-                cx={x}
-                cy={y}
-                r={highlighted ? 9 : 5}
-                highlighted={highlighted}
-                onMouseOver={this.highlight}
-                onMouseOut={this.unhighlight}
-            />
+            <DashboardContext.Consumer>
+                {({ highlightBreed, highlightedBreed }) => {
+                    const highlighted = highlightedBreed === breed;
+
+                    return (
+                        <Circle
+                            cx={x}
+                            cy={y}
+                            r={highlighted ? 9 : 5}
+                            highlighted={highlighted}
+                            onMouseOver={() => highlightBreed(breed)}
+                            onMouseOut={() => highlightBreed(null)}
+                        />
+                    );
+                }}
+            </DashboardContext.Consumer>
         );
     }
 }

@@ -46,7 +46,8 @@ class Scatterplot extends React.Component {
                 {data.map(d =>
                     entry({
                         x: xScale(xData(d)),
-                        y: yScale(yData(d))
+                        y: yScale(yData(d)),
+                        d: d
                     })
                 )}
                 <Axis
