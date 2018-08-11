@@ -95,6 +95,7 @@ class App extends Component {
                                 yData={d => d.height[0]}
                                 xLabel="Weight (lbs)"
                                 yLabel="Height (in)"
+                                title="Dog Breed Height & Weight"
                                 entry={props => (
                                     <Datapoint
                                         breed={props.d.breed}
@@ -119,6 +120,7 @@ class App extends Component {
                                 yData={d => d.sales}
                                 xLabel="Height (in)"
                                 yLabel="Sales"
+                                title="Sales and Height"
                                 entry={props => (
                                     <Datapoint
                                         breed={props.d.breed}
@@ -138,6 +140,7 @@ class App extends Component {
                                 yData={d => d.sales}
                                 xLabel="N(Obey)"
                                 yLabel="Sales"
+                                title="Sales and Intelligence"
                                 entry={props => (
                                     <Datapoint
                                         breed={props.d.breed}
@@ -149,7 +152,7 @@ class App extends Component {
                             <Scatterplot
                                 data={data}
                                 x={100}
-                                y={550}
+                                y={560}
                                 width={350}
                                 height={350}
                                 filter={d => d.obey && d.height && d.height[0]}
@@ -157,6 +160,7 @@ class App extends Component {
                                 yData={d => d.obey}
                                 xLabel="Height (in)"
                                 yLabel="N(Obey)"
+                                title="Intelligence and Height"
                                 entry={props => (
                                     <Datapoint
                                         breed={props.d.breed}
@@ -168,7 +172,7 @@ class App extends Component {
                             <Scatterplot
                                 data={data}
                                 x={550}
-                                y={550}
+                                y={560}
                                 width={350}
                                 height={350}
                                 filter={d => d.obey && d.weight && d.weight[0]}
@@ -176,6 +180,7 @@ class App extends Component {
                                 yData={d => d.obey}
                                 xLabel="Weight (in)"
                                 yLabel="N(Obey)"
+                                title="Intelligence and Weight"
                                 entry={props => (
                                     <Datapoint
                                         breed={props.d.breed}

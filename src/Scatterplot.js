@@ -1,7 +1,13 @@
 import React from "react";
 import * as d3 from "d3";
+import styled from "styled-components";
 
 import Axis from "./Axis";
+
+const Heading = styled.text`
+    font-weight: bold;
+    font-size: 1.4em;
+`;
 
 class Scatterplot extends React.Component {
     state = {};
@@ -27,22 +33,24 @@ class Scatterplot extends React.Component {
                 width,
                 height,
                 xLabel,
-                yLabel
+                yLabel,
+                title
             } = this.props,
             { data } = this.state;
 
         const xScale = d3
             .scaleLinear()
-            .domain(d3.extent(data, xData))
+            .domain([0, d3.max(data, xData)])
             .range([0, width]);
 
         const yScale = d3
             .scaleLinear()
-            .domain(d3.extent(data, yData))
+            .domain([0, d3.max(data, yData)])
             .range([height, 0]);
 
         return (
             <g transform={`translate(${x}, ${y})`}>
+                <Heading y={-25}>{title}</Heading>
                 {data.map(d =>
                     entry({
                         x: xScale(xData(d)),

@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import chroma from "chroma-js";
-import * as d3 from "d3";
 
 import DashboardContext from "./DashboardContext";
 
@@ -37,7 +36,7 @@ class Datapoint extends React.Component {
                         <Circle
                             cx={x}
                             cy={y}
-                            r={highlighted ? 11 : 5}
+                            r={highlighted ? 9 : 5}
                             highlighted={highlighted}
                             onMouseOver={() => highlightBreed(breed)}
                             onMouseOut={() => highlightBreed(null)}
