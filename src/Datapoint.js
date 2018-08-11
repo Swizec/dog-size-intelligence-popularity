@@ -8,37 +8,25 @@ import DashboardContext from "./DashboardContext";
 const Circle = styled.circle`
     fill: ${({ highlighted }) =>
         highlighted
-            ? chroma("#008ae5")
+            ? chroma("red")
                   .brighten(2)
                   .hex()
             : "#008ae5"}
     fill-opacity: 0.5;
-    stroke: #008ae5;
+    stroke: ${({ highlighted }) =>
+        highlighted
+            ? chroma("red")
+                  .brighten(2)
+                  .hex()
+            : "#008ae5"}
+    transition: r .2s ease-in-out;
 `;
 
 class Datapoint extends React.Component {
-    state = {
-        highlighted: false
-    };
-
     circleRef = React.createRef();
 
-    highlight = () => {
-        this.setState({ highlighted: true });
-    };
-
-    unhighlight = () => {
-        this.setState({ highlighted: false });
-    };
-
-    setUpHover = element => {
-        console.log(element);
-        // d3.select(el).on("mouseover", () => console.log("hai"));
-    };
-
     render() {
-        const { x, y, breed } = this.props,
-            { highlighted } = this.state;
+        const { x, y, breed } = this.props;
 
         return (
             <DashboardContext.Consumer>
@@ -49,10 +37,11 @@ class Datapoint extends React.Component {
                         <Circle
                             cx={x}
                             cy={y}
-                            r={highlighted ? 9 : 5}
+                            r={highlighted ? 11 : 5}
                             highlighted={highlighted}
                             onMouseOver={() => highlightBreed(breed)}
                             onMouseOut={() => highlightBreed(null)}
+                            ref={this.circleRef}
                         />
                     );
                 }}
