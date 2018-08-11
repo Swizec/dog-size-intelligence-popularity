@@ -6,16 +6,11 @@ import * as d3 from "d3";
 import styled from "styled-components";
 
 import Scatterplot from "./Scatterplot";
+import Datapoint from "./Datapoint";
 
 const Svg = styled.svg`
     width: 100%;
     min-height: 1024px;
-`;
-
-const Circle = styled.circle`
-    fill: #008ae5;
-    fill-opacity: 0.5;
-    stroke: #008ae5;
 `;
 
 class App extends Component {
@@ -96,7 +91,7 @@ class App extends Component {
                             yData={d => d.height[0]}
                             xLabel="Weight (lbs)"
                             yLabel="Height (in)"
-                            entry={({ x, y }) => <Circle cx={x} cy={y} r={5} />}
+                            entry={props => <Datapoint {...props} />}
                         />
 
                         <Scatterplot
@@ -112,7 +107,7 @@ class App extends Component {
                             yData={d => d.sales}
                             xLabel="Height (in)"
                             yLabel="Sales"
-                            entry={({ x, y }) => <Circle cx={x} cy={y} r={5} />}
+                            entry={props => <Datapoint {...props} />}
                         />
 
                         <Scatterplot
@@ -126,7 +121,7 @@ class App extends Component {
                             yData={d => d.sales}
                             xLabel="N(Obey)"
                             yLabel="Sales"
-                            entry={({ x, y }) => <Circle cx={x} cy={y} r={5} />}
+                            entry={props => <Datapoint {...props} />}
                         />
 
                         <Scatterplot
@@ -140,7 +135,7 @@ class App extends Component {
                             yData={d => d.obey}
                             xLabel="Height (in)"
                             yLabel="N(Obey)"
-                            entry={({ x, y }) => <Circle cx={x} cy={y} r={5} />}
+                            entry={props => <Datapoint {...props} />}
                         />
 
                         <Scatterplot
@@ -154,7 +149,7 @@ class App extends Component {
                             yData={d => d.obey}
                             xLabel="Weight (in)"
                             yLabel="N(Obey)"
-                            entry={({ x, y }) => <Circle cx={x} cy={y} r={5} />}
+                            entry={props => <Datapoint {...props} />}
                         />
                     </Svg>
                 ) : null}
