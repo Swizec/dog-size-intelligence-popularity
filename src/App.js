@@ -8,10 +8,14 @@ import styled from "styled-components";
 import Scatterplot from "./Scatterplot";
 import Datapoint from "./Datapoint";
 import DashboardContext from "./DashboardContext";
+import Descriptor from "./Descriptor";
 
 const Svg = styled.svg`
     width: 100%;
     min-height: 1024px;
+    position: absolute;
+    left: 0px;
+    top: 250px;
 `;
 
 class App extends Component {
@@ -65,7 +69,7 @@ class App extends Component {
     }
 
     render() {
-        const { data } = this.state;
+        const { data, highlightedBreed } = this.state;
 
         return (
             <div className="App">
@@ -77,8 +81,9 @@ class App extends Component {
                     {data === null ? "Loading CSV files ..." : null}
                 </p>
                 {data !== null ? (
-                    <Svg>
-                        <DashboardContext.Provider value={this.state}>
+                    <DashboardContext.Provider value={this.state}>
+                        <Descriptor />
+                        <Svg>
                             <Scatterplot
                                 data={data}
                                 x={100}
@@ -138,7 +143,7 @@ class App extends Component {
                                 filter={d => d.obey && d.sales}
                                 xData={d => d.obey}
                                 yData={d => d.sales}
-                                xLabel="N(Obey)"
+                                xLabel="Obey %"
                                 yLabel="Sales"
                                 title="Sales and Intelligence"
                                 entry={props => (
@@ -159,7 +164,7 @@ class App extends Component {
                                 xData={d => d.height[0]}
                                 yData={d => d.obey}
                                 xLabel="Height (in)"
-                                yLabel="N(Obey)"
+                                yLabel="Obey %"
                                 title="Intelligence and Height"
                                 entry={props => (
                                     <Datapoint
@@ -179,7 +184,7 @@ class App extends Component {
                                 xData={d => d.weight[0]}
                                 yData={d => d.obey}
                                 xLabel="Weight (in)"
-                                yLabel="N(Obey)"
+                                yLabel="Obey %"
                                 title="Intelligence and Weight"
                                 entry={props => (
                                     <Datapoint
@@ -188,8 +193,8 @@ class App extends Component {
                                     />
                                 )}
                             />
-                        </DashboardContext.Provider>
-                    </Svg>
+                        </Svg>
+                    </DashboardContext.Provider>
                 ) : null}
             </div>
         );
