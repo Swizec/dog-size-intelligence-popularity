@@ -6,7 +6,7 @@ import Axis from "./Axis";
 
 const Heading = styled.text`
     font-weight: bold;
-    font-size: 1.4em;
+    font-size: 1.2em;
 `;
 
 class Scatterplot extends React.Component {
@@ -47,9 +47,8 @@ class Scatterplot extends React.Component {
             .scaleLinear()
             .domain([0, d3.max(data, yData)])
             .range([height, 0]);
-
         return (
-            <g transform={`translate(${x}, ${y})`}>
+            <g transform={`translate(${x || 0}, ${y || 0 + 50})`}>
                 <Heading y={-25}>{title}</Heading>
                 {data.map(d =>
                     entry({

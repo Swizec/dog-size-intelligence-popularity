@@ -4,6 +4,7 @@ import "./App.css";
 
 import * as d3 from "d3";
 import styled from "styled-components";
+import Flexbox from "react-svg-flexbox";
 
 import Scatterplot from "./Scatterplot";
 import Datapoint from "./Datapoint";
@@ -15,15 +16,18 @@ const Svg = styled.svg`
     min-height: 1024px;
     position: absolute;
     left: 0px;
-    top: 250px;
+    top: 300px;
 `;
 
 class App extends Component {
     state = {
         data: null,
         highlightedBreed: null,
-        highlightBreed: breed => this.setState({ highlightedBreed: breed })
+        highlightBreed: breed => this.setState({ highlightedBreed: breed }),
+        width: 1024
     };
+
+    svgRef = React.createRef();
 
     componentDidMount() {
         Promise.all([
@@ -65,8 +69,19 @@ class App extends Component {
                 );
 
             this.setState({ data });
+            this.updateSize();
         });
+
+        window.addEventListener("resize", this.updateSize);
     }
+
+    componentWillUnmount() {
+        window.removeEventListener("resize", this.updateSize);
+    }
+
+    updateSize = () => {
+        this.setState({ width: this.svgRef.current.clientWidth });
+    };
 
     render() {
         const { data, highlightedBreed } = this.state;
@@ -83,117 +98,124 @@ class App extends Component {
                 {data !== null ? (
                     <DashboardContext.Provider value={this.state}>
                         <Descriptor />
-                        <Svg>
-                            <Scatterplot
-                                data={data}
-                                x={100}
-                                y={100}
-                                width={350}
-                                height={350}
-                                filter={d =>
-                                    d.weight &&
-                                    d.height &&
-                                    d.weight[0] &&
-                                    d.height[0]
-                                }
-                                xData={d => d.weight[0]}
-                                yData={d => d.height[0]}
-                                xLabel="Weight (lbs)"
-                                yLabel="Height (in)"
-                                title="Dog Breed Height & Weight"
-                                entry={props => (
-                                    <Datapoint
-                                        breed={props.d.breed}
-                                        {...props}
-                                    />
-                                )}
-                            />
+                        <svg
+                            style={{ width: "100%", height: 1024 }}
+                            ref={this.svgRef}
+                        >
+                            <Flexbox
+                                style={{
+                                    flexDirection: "row",
+                                    justifyContent: "flex-start",
+                                    flexWrap: "wrap",
+                                    width: this.state.width,
+                                    height: 1024
+                                }}
+                            >
+                                <Scatterplot
+                                    data={data}
+                                    width={200}
+                                    height={200}
+                                    filter={d =>
+                                        d.weight &&
+                                        d.height &&
+                                        d.weight[0] &&
+                                        d.height[0]
+                                    }
+                                    xData={d => d.weight[0]}
+                                    yData={d => d.height[0]}
+                                    xLabel="Weight (lbs)"
+                                    yLabel="Height (in)"
+                                    title="Dog Breed Height & Weight"
+                                    entry={props => (
+                                        <Datapoint
+                                            breed={props.d.breed}
+                                            {...props}
+                                        />
+                                    )}
+                                />
 
-                            <Scatterplot
-                                data={data}
-                                x={550}
-                                y={100}
-                                width={350}
-                                height={350}
-                                filter={d =>
-                                    d.weight &&
-                                    d.sales &&
-                                    d.weight[0] &&
-                                    d.height
-                                }
-                                xData={d => d.height[0]}
-                                yData={d => d.sales}
-                                xLabel="Height (in)"
-                                yLabel="Sales"
-                                title="Sales and Height"
-                                entry={props => (
-                                    <Datapoint
-                                        breed={props.d.breed}
-                                        {...props}
-                                    />
-                                )}
-                            />
+                                <Scatterplot
+                                    data={data}
+                                    width={400}
+                                    height={300}
+                                    filter={d =>
+                                        d.weight &&
+                                        d.sales &&
+                                        d.weight[0] &&
+                                        d.height
+                                    }
+                                    xData={d => d.height[0]}
+                                    yData={d => d.sales}
+                                    xLabel="Height (in)"
+                                    yLabel="Sales"
+                                    title="Sales and Height"
+                                    entry={props => (
+                                        <Datapoint
+                                            breed={props.d.breed}
+                                            {...props}
+                                        />
+                                    )}
+                                />
 
-                            <Scatterplot
-                                data={data}
-                                x={1000}
-                                y={100}
-                                width={350}
-                                height={350}
-                                filter={d => d.obey && d.sales}
-                                xData={d => d.obey}
-                                yData={d => d.sales}
-                                xLabel="Obey %"
-                                yLabel="Sales"
-                                title="Sales and Intelligence"
-                                entry={props => (
-                                    <Datapoint
-                                        breed={props.d.breed}
-                                        {...props}
-                                    />
-                                )}
-                            />
+                                <Scatterplot
+                                    data={data}
+                                    width={200}
+                                    height={200}
+                                    filter={d => d.obey && d.sales}
+                                    xData={d => d.obey}
+                                    yData={d => d.sales}
+                                    xLabel="Obey %"
+                                    yLabel="Sales"
+                                    title="Sales and Intelligence"
+                                    entry={props => (
+                                        <Datapoint
+                                            breed={props.d.breed}
+                                            {...props}
+                                        />
+                                    )}
+                                />
 
-                            <Scatterplot
-                                data={data}
-                                x={100}
-                                y={560}
-                                width={350}
-                                height={350}
-                                filter={d => d.obey && d.height && d.height[0]}
-                                xData={d => d.height[0]}
-                                yData={d => d.obey}
-                                xLabel="Height (in)"
-                                yLabel="Obey %"
-                                title="Intelligence and Height"
-                                entry={props => (
-                                    <Datapoint
-                                        breed={props.d.breed}
-                                        {...props}
-                                    />
-                                )}
-                            />
+                                <Scatterplot
+                                    data={data}
+                                    width={200}
+                                    height={200}
+                                    filter={d =>
+                                        d.obey && d.height && d.height[0]
+                                    }
+                                    xData={d => d.height[0]}
+                                    yData={d => d.obey}
+                                    xLabel="Height (in)"
+                                    yLabel="Obey %"
+                                    title="Intelligence and Height"
+                                    entry={props => (
+                                        <Datapoint
+                                            breed={props.d.breed}
+                                            {...props}
+                                        />
+                                    )}
+                                />
 
-                            <Scatterplot
-                                data={data}
-                                x={550}
-                                y={560}
-                                width={350}
-                                height={350}
-                                filter={d => d.obey && d.weight && d.weight[0]}
-                                xData={d => d.weight[0]}
-                                yData={d => d.obey}
-                                xLabel="Weight (in)"
-                                yLabel="Obey %"
-                                title="Intelligence and Weight"
-                                entry={props => (
-                                    <Datapoint
-                                        breed={props.d.breed}
-                                        {...props}
-                                    />
-                                )}
-                            />
-                        </Svg>
+                                <Scatterplot
+                                    data={data}
+                                    width={200}
+                                    height={200}
+                                    filter={d =>
+                                        d.obey && d.weight && d.weight[0]
+                                    }
+                                    xData={d => d.weight[0]}
+                                    yData={d => d.obey}
+                                    xLabel="Weight (in)"
+                                    yLabel="Obey %"
+                                    title="Intelligence and Weight"
+                                    entry={props => (
+                                        <Datapoint
+                                            breed={props.d.breed}
+                                            {...props}
+                                        />
+                                    )}
+                                />
+                            </Flexbox>
+                        </svg>
                     </DashboardContext.Provider>
                 ) : null}
             </div>

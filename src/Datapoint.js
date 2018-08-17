@@ -36,7 +36,7 @@ class Datapoint extends React.Component {
                         <Circle
                             cx={x}
                             cy={y}
-                            r={highlighted ? 9 : 5}
+                            r={highlighted ? 5 : 3}
                             highlighted={highlighted}
                             onMouseOver={() => highlightBreed(breed)}
                             onMouseOut={() => highlightBreed(null)}
